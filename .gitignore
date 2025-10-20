@@ -1,0 +1,14 @@
+.next
+node_modules
+.env*
+*.log
+dist
+
+
+
+
+.vercel
+
+
+
+
