@@ -42,10 +42,21 @@ export default function AllBranchesClient() {
   // This lets the top window request geolocation and pass it down to the iframe
   useEffect(() => {
     const onMessage = (event: MessageEvent) => {
+      console.log('📍 AllBranchesClient received message:', event.data);
       const data: any = event.data;
-      if (!data || typeof data !== 'object') return;
-      if (data.type !== 'fwf:setLocation') return;
-      if (typeof data.lat !== 'number' || typeof data.lng !== 'number') return;
+      if (!data || typeof data !== 'object') {
+        console.log('📍 Invalid message format:', data);
+        return;
+      }
+      if (data.type !== 'fwf:setLocation') {
+        console.log('📍 Wrong message type:', data.type);
+        return;
+      }
+      if (typeof data.lat !== 'number' || typeof data.lng !== 'number') {
+        console.log('📍 Invalid coordinates:', data.lat, data.lng);
+        return;
+      }
+      console.log('📍 Setting user coordinates:', data.lat, data.lng);
       setUserCoords({ lat: data.lat, lng: data.lng });
       setGeoError(null);
     };

@@ -8,6 +8,23 @@ const nextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: '**' }
     ]
+  },
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Permissions-Policy',
+            value: 'geolocation=(self "https://fb-cuahang.vercel.app" "https://cua-hang-vua-dev.vercel.app"), camera=(), microphone=()'
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN'
+          }
+        ]
+      }
+    ];
   }
 };
 

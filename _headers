@@ -1,0 +1,4 @@
+/*
+  Permissions-Policy: geolocation=(self "https://fb-cuahang.vercel.app" "https://cua-hang-vua-dev.vercel.app")
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin

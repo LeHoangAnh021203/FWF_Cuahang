@@ -60,6 +60,32 @@ export default function BranchesList() {
     })();
   }, []);
 
+  // Receive location from parent (WordPress) via postMessage
+  // This lets the top window request geolocation and pass it down to the iframe
+  useEffect(() => {
+    const onMessage = (event: MessageEvent) => {
+      console.log('📍 BranchesList received message:', event.data);
+      const data: any = event.data;
+      if (!data || typeof data !== 'object') {
+        console.log('📍 Invalid message format:', data);
+        return;
+      }
+      if (data.type !== 'fwf:setLocation') {
+        console.log('📍 Wrong message type:', data.type);
+        return;
+      }
+      if (typeof data.lat !== 'number' || typeof data.lng !== 'number') {
+        console.log('📍 Invalid coordinates:', data.lat, data.lng);
+        return;
+      }
+      console.log('📍 Setting user coordinates:', data.lat, data.lng);
+      setUserCoords({ lat: data.lat, lng: data.lng });
+      setGeoError(null);
+    };
+    window.addEventListener('message', onMessage);
+    return () => window.removeEventListener('message', onMessage);
+  }, []);
+
   // Get user location (optional)
   const requestLocation = () => {
     if (!('geolocation' in navigator)) {

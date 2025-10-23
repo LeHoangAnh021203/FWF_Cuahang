@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import AutoHeightProvider from './components/AutoHeightProvider';
 
 export const metadata: Metadata = {
   title: 'Cửa Hàng',
@@ -9,7 +10,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="vi">
-      <body>{children}</body>
+      <body>
+        <AutoHeightProvider>
+          {children}
+        </AutoHeightProvider>
+      </body>
     </html>
   );
 }
